@@ -130,12 +130,11 @@ const PokeCard = ({ url }) => {
           </div>
         </div>
       </header>
-      <span className="PokeCard__id text-center">#{datosApi?.id}</span>
       <h3 className={claseName}>{datosApi?.name}</h3>
       <ul className="PokeCard__types-ul flex gap-2 justify-center">
         {datosApi?.types.map((dato) => {
           return (
-            <li key={dato.type.url} className="PokeCard__types-li">
+            <li key={dato.type.url} className="PokeCard__types-li text-center text-1xl font-bold">
               {dato.type.name}
             </li>
           );
