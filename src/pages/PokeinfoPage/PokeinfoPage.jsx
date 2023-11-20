@@ -112,7 +112,6 @@ const PokeinfoPage = () => {
           break;
       }
   })
-  console.log(pokemon);
   return (
     <div>
         <div>

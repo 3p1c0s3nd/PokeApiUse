@@ -9,13 +9,14 @@ const PokedexPage = () => {
     return store.trainerName;
   });
 */
+  const [urldata, setUrldata] = useState(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=0`);
   const trainerName = localStorage.getItem("trainerName");
   const buscador = useRef();
   const [inputValue, setInputValue] = useState("");
   const [selectValue, setSelectValue] = useState("");
 
-  const url = `https://pokeapi.co/api/v2/pokemon?limit=10&offset=0`;
-  const [dataApi, getInfoApi, getTypeApi] = useFetch(url);
+  
+  const [dataApi, getInfoApi, getTypeApi] = useFetch(urldata);
   const countPaginacion = dataApi?.count;
   useEffect(() => {
     if (selectValue == "") {
@@ -23,9 +24,11 @@ const PokedexPage = () => {
     } else {
       getTypeApi(selectValue);
     }
-  }, [selectValue]);
+  }, [urldata, selectValue]);
 
-  console.log(countPaginacion);
+  useEffect(() => {
+    localStorage.setItem("page", 0);
+  },[]);
   const handleSearch = (e) => {
     e.preventDefault();
     setInputValue(buscador.current.value.toLowerCase().trim());
@@ -48,6 +51,15 @@ const PokedexPage = () => {
 
   return (
     <div>
+       <div>
+          <img
+            src="pokedex.png"
+            className="z-10 absolute pt-8"
+            width={300}
+            height={50}
+          />
+          <p className="Home__footer bg-black text-center w-screen h-12 rounded-1xl z-0"></p>
+        </div>
       <header className="Home__footer grid justify-items-end w-full absolute top-0">
         <p className="Home__footer bg-red-600 text-center w-screen h-12 rounded-1xl z-0"></p>
         <img
@@ -64,11 +76,11 @@ const PokedexPage = () => {
       </p>
       <span
         onClick={handleCerrarsession}
-        className="Home__button bg-red-600 text-white rounded-1xl p-2 absolute right-10" style={{cursor: 'pointer'}}
+        className="Home__button bg-red-600 text-white rounded-1xl p-2 absolute right-10 hover:bg-red-700" style={{cursor: 'pointer'}}
       >
         Cerrar Session
       </span>
-      <div className="Home__principal flex flex-row pl-10 ">
+      <div className="Home__principal flex flex-row pl-10 pt-10">
         <form onSubmit={handleSearch}>
           <input
             type="search"
@@ -76,7 +88,7 @@ const PokedexPage = () => {
             className="Home__input border-2 border-grey-500 rounded-1xl p-2 bg-white shadow-2xl"
             placeholder="Search your pokemon"
           />
-          <button className="Home__button bg-red-600 text-white rounded-1xl p-2">
+          <button className="Home__button bg-red-600 text-white rounded-1xl p-2 hover:bg-red-700">
             Search
           </button>
         </form>
@@ -90,15 +102,26 @@ const PokedexPage = () => {
 
          
       <div className="paginacion flex flex-row align-items-center justify-center">
-        <button className="Home__button bg-red-600 text-white rounded-1xl p-2">
+        <button className="Home__button bg-red-600 text-white rounded-1xl p-2 hover:bg-red-700" onClick={
+          () => {
+            var newOffset = parseInt(localStorage.getItem("page")) - 10;  
+            localStorage.setItem("page", newOffset.toString());
+            console.log(newOffset);
+            setUrldata(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${newOffset}`);
+          }
+        }>
           Anterior
         </button>
         <span className="Home__button bg-red-600 text-white rounded-1xl p-2">
-          {
-            
-          }
+          
         </span>
-        <button className="Home__button bg-red-600 text-white rounded-1xl p-2">
+        
+        <button className="Home__button bg-red-600 text-white rounded-1xl p-2 hover:bg-red-700" onClick={() => {  
+          var newOffset = parseInt(localStorage.getItem("page")) + 10;  
+          localStorage.setItem("page", newOffset.toString());
+          console.log(newOffset);
+          setUrldata(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${newOffset}`);
+        }}>
           Siguiente
         </button>
       </div>

@@ -112,8 +112,8 @@ const PokeCard = ({ url }) => {
     }
   });
 
-  console.log(datosApi);
-  return (<div className="p-2 pb-10">
+
+  return (<div className="p-2 pb-10" style={{ cursor: 'pointer' }}>
 <div onClick={handleNavigator} className={claseBorder}>
       <header className="PokeCard__header pb-20">
         <div className={claseGradient}>
