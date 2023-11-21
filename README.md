@@ -11,4 +11,4 @@ Currently, two official plugins are available:
 
 DEMO:
 
-[https://poke-api-use.vercel.app/](https://poke-api-use.vercel.app/)
+https://poke-api-use.vercel.app/
